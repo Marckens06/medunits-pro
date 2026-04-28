@@ -12,6 +12,9 @@ import IVDrip from './pages/IVDrip'
 import CrCl from './pages/CrCl'
 import Login from './pages/Login'
 import Pricing from './pages/Pricing'
+import FAQ from './pages/FAQ'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 import './styles/globals.css'
 
 export default function App() {
@@ -31,6 +34,9 @@ export default function App() {
             <Route path="/ivdrip" element={<IVDrip />} />
             <Route path="/crcl" element={<CrCl />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Route>
         </Routes>
