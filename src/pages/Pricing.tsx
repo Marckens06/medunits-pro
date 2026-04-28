@@ -9,7 +9,7 @@ export default function Pricing() {
   const { user, plan } = useAuth()
   const navigate = useNavigate()
 
-  const upgradeUrl = `https://www.mcsanteplus.com/medunits-pro?email=${encodeURIComponent(user?.email || '')}`
+  const upgradeUrl = `https://www.mcsanteplus.com/pricing-plans/checkout-1?planId=07f9a28c-668d-415e-9971-a8ca5479173a&checkoutFlowId=efccf466-6106-44e8-a1dd-2991624efea2&email=${encodeURIComponent(user?.email || '')}`
 
   return (
     <div style={{ maxWidth: 700, margin: '0 auto' }}>
