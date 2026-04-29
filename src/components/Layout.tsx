@@ -229,9 +229,93 @@ export default function Layout() {
       {/* Main content */}
       <main className="main-content" style={{
         marginLeft: 240, flex: 1, padding: '32px 40px',
-        maxWidth: 'calc(100vw - 240px)'
+        maxWidth: 'calc(100vw - 240px)',
+        display: 'flex', flexDirection: 'column', minHeight: '100vh'
       }}>
-        <Outlet />
+        <div style={{ flex: 1 }}>
+          <Outlet />
+        </div>
+        {/* Footer */}
+        <footer style={{
+          marginTop: 60, paddingTop: 32,
+          borderTop: '1px solid var(--border)',
+        }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 32, marginBottom: 24 }}>
+            {/* Brand */}
+            <div style={{ flex: '1 1 200px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                <span style={{ fontSize: 20 }}>⚕️</span>
+                <span style={{ fontWeight: 800, fontSize: 14 }}>MedUnits Pro</span>
+              </div>
+              <p style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>
+                Instant medical unit conversions & clinical calculators for healthcare professionals.
+              </p>
+            </div>
+            {/* Our Products */}
+            <div style={{ flex: '1 1 150px' }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text3)',
+                letterSpacing: 1, marginBottom: 12 }}>OUR PRODUCTS</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {[
+                  { href: 'https://studymedai.com', label: '🧠 StudyMed AI', desc: 'Medical exam prep' },
+                  { href: 'https://mcplusquiz.com', label: '🎬 RapidQuiz AI', desc: 'Quiz video generator' },
+                  { href: 'https://medunits.findtheideas.com', label: '⚕️ MedUnits Pro', desc: 'Medical converter' },
+                ].map(({ href, label, desc }) => (
+                  <a key={href} href={href} target="_blank" rel="noreferrer"
+                    style={{ textDecoration: 'none' }}>
+                    <div style={{ fontSize: 12, color: 'var(--text)', fontWeight: 600 }}>{label}</div>
+                    <div style={{ fontSize: 11, color: 'var(--text3)' }}>{desc}</div>
+                  </a>
+                ))}
+              </div>
+            </div>
+            {/* Legal */}
+            <div style={{ flex: '1 1 150px' }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text3)',
+                letterSpacing: 1, marginBottom: 12 }}>LEGAL</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {[
+                  { to: '/faq', label: 'FAQ' },
+                  { to: '/privacy', label: 'Privacy Policy' },
+                  { to: '/terms', label: 'Terms of Service' },
+                ].map(({ to, label }) => (
+                  <a key={to} href={to}
+                    style={{ fontSize: 12, color: 'var(--text3)', textDecoration: 'none' }}>
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </div>
+            {/* Contact */}
+            <div style={{ flex: '1 1 150px' }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text3)',
+                letterSpacing: 1, marginBottom: 12 }}>CONTACT</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <a href="mailto:support@mcsanteplus.com"
+                  style={{ fontSize: 12, color: 'var(--text3)', textDecoration: 'none' }}>
+                  support@mcsanteplus.com
+                </a>
+                <a href="https://mcsanteplus.com" target="_blank" rel="noreferrer"
+                  style={{ fontSize: 12, color: 'var(--text3)', textDecoration: 'none' }}>
+                  mcsanteplus.com
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* Copyright */}
+          <div style={{
+            paddingTop: 16, borderTop: '1px solid var(--border)',
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            flexWrap: 'wrap', gap: 8
+          }}>
+            <div style={{ fontSize: 11, color: 'var(--text3)' }}>
+              © {new Date().getFullYear()} MC Santé Plus Services LLC. All rights reserved.
+            </div>
+            <div style={{ fontSize: 11, color: 'var(--text3)' }}>
+              For educational purposes only. Not a substitute for clinical judgment.
+            </div>
+          </div>
+        </footer>
       </main>
     </div>
   )

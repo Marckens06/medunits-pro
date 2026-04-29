@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signInWithRedirect, getRedirectResult } from 'firebase/auth'
 import { doc, setDoc } from 'firebase/firestore'
 import { auth, db, googleProvider } from '../utils/firebase'
 
@@ -11,6 +11,18 @@ export default function Login() {
   const [isSignup, setIsSignup] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  // Handle redirect result on mobile
+  useState(() => {
+    getRedirectResult(auth).then(async (result) => {
+      if (result?.user) {
+        await setDoc(doc(db, 'users', result.user.uid), {
+          email: result.user.email, plan: 'free', created_at: new Date().toISOString()
+        }, { merge: true })
+        navigate('/')
+      }
+    }).catch(() => {})
+  })
 
   async function handleSubmit() {
     setLoading(true); setError('')
@@ -31,9 +43,14 @@ export default function Login() {
 
   async function handleGoogle() {
     try {
-      const { user } = await signInWithPopup(auth, googleProvider)
-      await setDoc(doc(db, 'users', user.uid), { email: user.email, plan: 'free', created_at: new Date().toISOString() }, { merge: true })
-      navigate('/')
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+      if (isMobile) {
+        await signInWithRedirect(auth, googleProvider)
+      } else {
+        const { user } = await signInWithPopup(auth, googleProvider)
+        await setDoc(doc(db, 'users', user.uid), { email: user.email, plan: 'free', created_at: new Date().toISOString() }, { merge: true })
+        navigate('/')
+      }
     } catch (e: any) {
       setError(e.message)
     }
