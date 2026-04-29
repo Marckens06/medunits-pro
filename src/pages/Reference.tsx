@@ -123,16 +123,11 @@ const SECTIONS = [
         reference: 'ADA Standards of Care in Diabetes, 2025'
       },
       {
-        term: 'Hypoglycemia — 3-Level Classification (ADA/EASD 2025)',
-        formula: 'Level 1: 54–70 mg/dL (3.0–3.9 mmol/L) | Level 2: <54 mg/dL (<3.0 mmol/L) | Level 3: Severe (any glucose)',
-        description: `Level 1 (<70 mg/dL): Alert threshold — clinically actionable, patient should treat. Often asymptomatic. In people WITHOUT diabetes, 70 mg/dL is the threshold for adrenergic (sympathetic) responses; non-diabetic individuals may tolerate lower levels without symptoms due to intact counterregulatory mechanisms.
-
-Level 2 (<54 mg/dL): Clinically serious — neurogenic symptoms and cognitive dysfunction occur at this level. Internationally agreed threshold for clinical trials and CGM reporting (ADA/EASD joint position). Risk of severe hypoglycemia increases significantly.
-
-Level 3 (Severe): Altered mental/physical status requiring assistance for recovery — irrespective of glucose value. Includes confusion, seizure, or loss of consciousness.
-
-⚠️ Important nuance: Glycemic thresholds are NOT fixed. In patients with tight glycemic control or frequent hypoglycemia, symptoms may occur at lower glucose levels (hypoglycemia unawareness). Conversely, in poorly controlled diabetes, patients may experience symptoms at higher glucose levels (e.g., 90–100 mg/dL). Non-diabetic individuals rarely develop true hypoglycemia; when they do, evaluate for insulinoma, medications, or other causes using the Whipple Triad (low glucose + symptoms + symptom resolution with glucose correction).`,
-        reference: 'ADA Standards of Care 2025; ADA/EASD Joint Position Statement (Diabetes Care 2018); International Hypoglycemia Study Group'
+      {
+        term: 'Hypoglycemia — 3-Level Classification (ADA/EASD)',
+        formula: '• Level 1: <70 and ≥54 mg/dL (<3.9 and ≥3.0 mmol/L) — Alert threshold\n• Level 2: <54 mg/dL (<3.0 mmol/L) — Clinically significant\n• Level 3: Severe — Requires external assistance (no fixed glucose threshold)',
+        description: '⚠️ Clinical nuance: These thresholds are primarily used for people with diabetes. In people without diabetes, evaluate true hypoglycemia using Whipple triad: low glucose, compatible symptoms, and symptom resolution after glucose correction. Symptoms may occur at higher or lower glucose levels depending on baseline glycemic control.',
+        reference: 'ADA Standards of Care 2025; ADA/EASD International Hypoglycemia Study Group definitions'
       },
       {
         term: 'Body Temperature',
