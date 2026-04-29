@@ -15,6 +15,7 @@ import Pricing from './pages/Pricing'
 import FAQ from './pages/FAQ'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
+import Reference from './pages/Reference'
 import './styles/globals.css'
 
 export default function App() {
