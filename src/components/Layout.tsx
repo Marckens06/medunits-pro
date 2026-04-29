@@ -23,6 +23,7 @@ const PRO_NAV = [
 ]
 
 const FOOTER_NAV = [
+  { to: '/reference', label: 'Reference', Icon: BookOpen },
   { to: '/faq', label: 'FAQ', Icon: HelpCircle },
   { to: '/privacy', label: 'Privacy', Icon: Shield },
   { to: '/terms', label: 'Terms', Icon: FileText },
