@@ -38,6 +38,7 @@ export default function App() {
             <Route path="/faq" element={<FAQ />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/reference"     element={<Reference />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Route>
         </Routes>
