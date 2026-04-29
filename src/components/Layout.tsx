@@ -279,10 +279,10 @@ export default function Layout() {
                   { to: '/privacy', label: 'Privacy Policy' },
                   { to: '/terms', label: 'Terms of Service' },
                 ].map(({ to, label }) => (
-                  <a key={to} href={to}
+                  <NavLink key={to} to={to}
                     style={{ fontSize: 12, color: 'var(--text3)', textDecoration: 'none' }}>
                     {label}
-                  </a>
+                  </NavLink>
                 ))}
               </div>
             </div>
