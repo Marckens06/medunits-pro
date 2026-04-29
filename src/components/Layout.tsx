@@ -259,6 +259,7 @@ export default function Layout() {
                 {[
                   { href: 'https://studymedai.com', label: '🧠 StudyMed AI', desc: 'Medical exam prep' },
                   { href: 'https://mcplusquiz.com', label: '🎬 RapidQuiz AI', desc: 'Quiz video generator' },
+                  { href: 'https://autoquizai.com', label: '🎯 AutoQuiz AI', desc: 'AI quiz video maker' },
                   { href: 'https://medunits.findtheideas.com', label: '⚕️ MedUnits Pro', desc: 'Medical converter' },
                 ].map(({ href, label, desc }) => (
                   <a key={href} href={href} target="_blank" rel="noreferrer"
