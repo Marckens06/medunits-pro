@@ -123,7 +123,6 @@ const SECTIONS = [
         reference: 'ADA Standards of Care in Diabetes, 2025'
       },
       {
-      {
         term: 'Hypoglycemia — 3-Level Classification (ADA/EASD)',
         formula: '• Level 1: <70 and ≥54 mg/dL (<3.9 and ≥3.0 mmol/L) — Alert threshold\n• Level 2: <54 mg/dL (<3.0 mmol/L) — Clinically significant\n• Level 3: Severe — Requires external assistance (no fixed glucose threshold)',
         description: '⚠️ Clinical nuance: These thresholds are primarily used for people with diabetes. In people without diabetes, evaluate true hypoglycemia using Whipple triad: low glucose, compatible symptoms, and symptom resolution after glucose correction. Symptoms may occur at higher or lower glucose levels depending on baseline glycemic control.',
