@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import {
   Weight, Thermometer, Droplets, Ruler,
   Calculator, Syringe, Activity, FlaskConical,
-  LogOut, Crown, Home, Menu, X, FileText, Shield, HelpCircle
+  LogOut, Crown, Home, Menu, X, FileText, Shield, HelpCircle, BookOpen
 } from 'lucide-react'
 
 const FREE_NAV = [
