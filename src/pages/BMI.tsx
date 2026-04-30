@@ -28,6 +28,14 @@ export default function BMI() {
   const cat = bmi ? bmiCategory(bmi) : null
   const ibw = valid ? calcIBW(h, sex) : null
 
+  const getBMIAlert = (b: number) => {
+    if (b >= 40) return { msg: '🚨 Class III Obesity (BMI ≥40) — High risk of comorbidities. Bariatric evaluation may be indicated.', color: 'var(--red)' }
+    if (b >= 35) return { msg: '⚠️ Class II Obesity (BMI 35-39.9) — Significant health risks. Lifestyle intervention recommended.', color: 'var(--red)' }
+    if (b < 18.5) return { msg: '⚠️ Underweight (BMI <18.5) — Nutritional assessment recommended.', color: 'var(--warning)' }
+    return null
+  }
+  const bmiAlert = bmi ? getBMIAlert(bmi) : null
+
   return (
     <div style={{ maxWidth: 600, margin: '0 auto' }}>
       <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8 }}>📊 BMI Calculator</h1>
@@ -57,6 +65,11 @@ export default function BMI() {
       </div>
       {bmi && cat && ibw && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {bmiAlert && (
+            <div className="card" style={{ background: 'rgba(239,68,68,0.08)', border: `1px solid ${bmiAlert.color}` }}>
+              <div style={{ fontSize: 13, color: bmiAlert.color, fontWeight: 600 }}>{bmiAlert.msg}</div>
+            </div>
+          )}
           <div className="card" style={{ textAlign: 'center' }}>
             <div style={{ fontSize: 12, color: 'var(--text3)', marginBottom: 4 }}>BMI</div>
             <div style={{ fontSize: 48, fontWeight: 900, color: cat.color }}>{bmi}</div>

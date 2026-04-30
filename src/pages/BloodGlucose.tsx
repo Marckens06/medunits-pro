@@ -18,6 +18,15 @@ export default function BloodGlucose() {
   const mmol = valid ? (from === 'mmol' ? num : mgdlToMmol(num)) : null
   const status = mgdl ? getStatus(mgdl) : null
 
+  const getGlucoseAlert = (v: number) => {
+    if (v < 54) return { msg: '🚨 Level 2 Hypoglycemia (<54 mg/dL) — Clinically significant. Immediate treatment required.', color: 'var(--red)' }
+    if (v < 70) return { msg: '⚠️ Level 1 Hypoglycemia (<70 mg/dL) — Alert threshold. Patient should treat immediately.', color: 'var(--warning)' }
+    if (v >= 400) return { msg: '🚨 Severe Hyperglycemia (≥400 mg/dL) — Risk of DKA/HHS. Urgent medical evaluation needed.', color: 'var(--red)' }
+    if (v >= 180) return { msg: '⚠️ Hyperglycemia (≥180 mg/dL) — Above postprandial target for most diabetic patients.', color: 'var(--warning)' }
+    return null
+  }
+  const glucoseAlert = mgdl ? getGlucoseAlert(mgdl) : null
+
   return (
     <div style={{ maxWidth: 600, margin: '0 auto' }}>
       <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8 }}>🩸 Blood Glucose Converter</h1>
@@ -62,6 +71,11 @@ export default function BloodGlucose() {
             </div>
           )}
         </>
+      )}
+      {glucoseAlert && valid && (
+        <div className="card" style={{ marginBottom: 12, background: 'rgba(239,68,68,0.08)', border: `1px solid ${glucoseAlert.color}` }}>
+          <div style={{ fontSize: 13, color: glucoseAlert.color, fontWeight: 600 }}>{glucoseAlert.msg}</div>
+        </div>
       )}
       <div className="card" style={{ marginTop: 16, background: 'rgba(37,99,235,0.08)' }}>
         <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text2)', marginBottom: 8 }}>📋 Reference Ranges</div>

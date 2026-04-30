@@ -38,6 +38,14 @@ export default function CrCl() {
 
   const stage = crcl ? getStage(crcl) : null
 
+  const getAlert = (v: number) => {
+    if (v < 15) return { msg: '🚨 Kidney failure (G5) — Nephrology consult required. Significant dose adjustments needed.', color: 'var(--red)' }
+    if (v < 30) return { msg: '⚠️ Severely reduced (G4) — Review all renally-cleared medications for dose adjustment.', color: 'var(--red)' }
+    if (v < 60) return { msg: '⚠️ Moderately reduced (G3) — Consider dose adjustments for renally-cleared drugs.', color: 'var(--warning)' }
+    return null
+  }
+  const alert = crcl ? getAlert(crcl) : null
+
   return (
     <div style={{ maxWidth: 600, margin: '0 auto' }}>
       <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8 }}>🧪 Creatinine Clearance</h1>
@@ -81,6 +89,11 @@ export default function CrCl() {
               <div style={{ fontSize: 12, color: 'var(--text3)' }}>CKD staging based on eGFR</div>
             </div>
           </div>
+          {alert && (
+            <div className="card" style={{ background: 'rgba(239,68,68,0.08)', border: `1px solid ${alert.color}`, marginTop: 0 }}>
+              <div style={{ fontSize: 13, color: alert.color, fontWeight: 600 }}>{alert.msg}</div>
+            </div>
+          )}
         </div>
       )}
     </div>

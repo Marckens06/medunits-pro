@@ -30,7 +30,7 @@ const FOOTER_NAV = [
 ]
 
 export default function Layout() {
-  const { user, plan, logout } = useAuth()
+  const { user, plan, lang, setLang, logout } = useAuth()
   const navigate = useNavigate()
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -58,6 +58,21 @@ export default function Layout() {
             className="mobile-close-btn">
             <X size={20} />
           </button>
+        </div>
+      </div>
+
+      {/* Language toggle */}
+      <div style={{ padding: '12px 20px', borderBottom: '1px solid var(--border)' }}>
+        <div style={{ display: 'flex', gap: 6, background: 'var(--bg3)', borderRadius: 8, padding: 4 }}>
+          {(['en', 'fr'] as const).map(l => (
+            <button key={l} onClick={() => setLang(l)}
+              style={{ flex: 1, padding: '5px 0', borderRadius: 6, border: 'none',
+                cursor: 'pointer', fontSize: 12, fontWeight: 700,
+                background: lang === l ? 'var(--accent)' : 'transparent',
+                color: lang === l ? '#fff' : 'var(--text3)' }}>
+              {l.toUpperCase()}
+            </button>
+          ))}
         </div>
       </div>
 
