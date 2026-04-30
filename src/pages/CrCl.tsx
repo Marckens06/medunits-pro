@@ -5,7 +5,8 @@ import { calcCrCl } from '../utils/converters'
 import { Crown } from 'lucide-react'
 
 export default function CrCl() {
-  const { plan } = useAuth()
+  const { plan, lang } = useAuth()
+  const isFr = lang === 'fr'
   const navigate = useNavigate()
   const [age, setAge] = useState('')
   const [weight, setWeight] = useState('')
@@ -39,9 +40,15 @@ export default function CrCl() {
   const stage = crcl ? getStage(crcl) : null
 
   const getAlert = (v: number) => {
-    if (v < 15) return { msg: '🚨 Kidney failure (G5) — Nephrology consult required. Significant dose adjustments needed.', color: 'var(--red)' }
-    if (v < 30) return { msg: '⚠️ Severely reduced (G4) — Review all renally-cleared medications for dose adjustment.', color: 'var(--red)' }
-    if (v < 60) return { msg: '⚠️ Moderately reduced (G3) — Consider dose adjustments for renally-cleared drugs.', color: 'var(--warning)' }
+    if (v < 15) return {
+      msg: isFr ? '🚨 Insuffisance rénale (G5) — Consultation néphrologue requise. Ajustements posologiques importants nécessaires.' : '🚨 Kidney failure (G5) — Nephrology consult required. Significant dose adjustments needed.',
+      color: 'var(--red)' }
+    if (v < 30) return {
+      msg: isFr ? '⚠️ Sévèrement réduit (G4) — Revoir tous les médicaments à élimination rénale.' : '⚠️ Severely reduced (G4) — Review all renally-cleared medications for dose adjustment.',
+      color: 'var(--red)' }
+    if (v < 60) return {
+      msg: isFr ? '⚠️ Modérément réduit (G3) — Envisager des ajustements posologiques.' : '⚠️ Moderately reduced (G3) — Consider dose adjustments for renally-cleared drugs.',
+      color: 'var(--warning)' }
     return null
   }
   const alert = crcl ? getAlert(crcl) : null

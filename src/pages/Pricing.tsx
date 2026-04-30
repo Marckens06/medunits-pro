@@ -2,11 +2,14 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Crown, Check } from 'lucide-react'
 
-const FREE_FEATURES = ['Weight converter', 'Temperature converter', 'Blood glucose converter', 'Height converter']
-const PRO_FEATURES = ['Everything in Free', 'BMI + Ideal Body Weight', 'Drug dosage calculator (mg/kg)', 'IV drip rate calculator', 'Creatinine clearance (Cockcroft-Gault)', 'Priority support']
+const FREE_FEATURES_EN = ['Weight converter', 'Temperature converter', 'Blood glucose converter', 'Height converter']
+const FREE_FEATURES_FR = ['Convertisseur de poids', 'Convertisseur de température', 'Convertisseur glycémie', 'Convertisseur de taille']
+const PRO_FEATURES_EN = ['Everything in Free', 'BMI + Ideal Body Weight', 'Drug dosage calculator (mg/kg)', 'IV drip rate calculator', 'Creatinine clearance (Cockcroft-Gault)', 'Priority support']
+const PRO_FEATURES_FR = ['Tout du plan gratuit', 'IMC + Poids idéal', 'Calculateur de dosage (mg/kg)', 'Calculateur de débit IV', 'Clairance créatinine (Cockcroft-Gault)', 'Support prioritaire']
 
 export default function Pricing() {
-  const { user, plan } = useAuth()
+  const { user, plan, lang } = useAuth()
+  const isFr = lang === 'fr'
   const navigate = useNavigate()
 
   const upgradeUrl = `https://www.mcsanteplus.com/pricing-plans/checkout-1?planId=07f9a28c-668d-415e-9971-a8ca5479173a&checkoutFlowId=efccf466-6106-44e8-a1dd-2991624efea2&email=${encodeURIComponent(user?.email || '')}`
@@ -14,16 +17,16 @@ export default function Pricing() {
   return (
     <div style={{ maxWidth: 700, margin: '0 auto' }}>
       <div style={{ textAlign: 'center', marginBottom: 40 }}>
-        <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 8 }}>Simple Pricing</h1>
-        <p style={{ color: 'var(--text2)' }}>Unlock all clinical calculators for one low price</p>
+        <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 8 }}>{isFr ? 'Tarifs simples' : 'Simple Pricing'}</h1>
+        <p style={{ color: 'var(--text2)' }}>{isFr ? 'Débloquez tous les calculateurs cliniques pour un prix abordable' : 'Unlock all clinical calculators for one low price'}</p>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
         {/* Free */}
         <div className="card">
-          <div style={{ fontSize: 18, fontWeight: 800, marginBottom: 4 }}>Free</div>
+          <div style={{ fontSize: 18, fontWeight: 800, marginBottom: 4 }}>{isFr ? 'Gratuit' : 'Free'}</div>
           <div style={{ fontSize: 32, fontWeight: 900, marginBottom: 16 }}>$0</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
-            {FREE_FEATURES.map(f => (
+            {(isFr ? FREE_FEATURES_FR : FREE_FEATURES_EN).map(f => (
               <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text2)' }}>
                 <Check size={14} color="var(--success)" /> {f}
               </div>
@@ -47,7 +50,7 @@ export default function Pricing() {
             <span style={{ color: 'var(--text3)', fontSize: 14 }}>/month</span>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
-            {PRO_FEATURES.map(f => (
+            {(isFr ? PRO_FEATURES_FR : PRO_FEATURES_EN).map(f => (
               <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text2)' }}>
                 <Check size={14} color="var(--accent)" /> {f}
               </div>

@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { mgdlToMmol, mmolToMgdl } from '../utils/converters'
+import { useAuth } from '../context/AuthContext'
 
 export default function BloodGlucose() {
+  const { lang } = useAuth()
+  const isFr = lang === 'fr'
   const [value, setValue] = useState('')
   const [from, setFrom] = useState<'mgdl' | 'mmol'>('mgdl')
   const num = parseFloat(value)
@@ -19,10 +22,10 @@ export default function BloodGlucose() {
   const status = mgdl ? getStatus(mgdl) : null
 
   const getGlucoseAlert = (v: number) => {
-    if (v < 54) return { msg: '🚨 Level 2 Hypoglycemia (<54 mg/dL) — Clinically significant. Immediate treatment required.', color: 'var(--red)' }
-    if (v < 70) return { msg: '⚠️ Level 1 Hypoglycemia (<70 mg/dL) — Alert threshold. Patient should treat immediately.', color: 'var(--warning)' }
-    if (v >= 400) return { msg: '🚨 Severe Hyperglycemia (≥400 mg/dL) — Risk of DKA/HHS. Urgent medical evaluation needed.', color: 'var(--red)' }
-    if (v >= 180) return { msg: '⚠️ Hyperglycemia (≥180 mg/dL) — Above postprandial target for most diabetic patients.', color: 'var(--warning)' }
+    if (v < 54) return { msg: isFr ? '🚨 Hypoglycémie Niveau 2 (<54 mg/dL) — Cliniquement significatif. Traitement immédiat requis.' : '🚨 Level 2 Hypoglycemia (<54 mg/dL) — Clinically significant. Immediate treatment required.', color: 'var(--red)' }
+    if (v < 70) return { msg: isFr ? '⚠️ Hypoglycémie Niveau 1 (<70 mg/dL) — Seuil d'alerte. Le patient doit se traiter immédiatement.' : '⚠️ Level 1 Hypoglycemia (<70 mg/dL) — Alert threshold. Patient should treat immediately.', color: 'var(--warning)' }
+    if (v >= 400) return { msg: isFr ? '🚨 Hyperglycémie sévère (≥400 mg/dL) — Risque d'ACD/SHH. Évaluation médicale urgente nécessaire.' : '🚨 Severe Hyperglycemia (≥400 mg/dL) — Risk of DKA/HHS. Urgent medical evaluation needed.', color: 'var(--red)' }
+    if (v >= 180) return { msg: isFr ? '⚠️ Hyperglycémie (≥180 mg/dL) — Au-dessus de la cible postprandiale pour la plupart des patients diabétiques.' : '⚠️ Hyperglycemia (≥180 mg/dL) — Above postprandial target for most diabetic patients.', color: 'var(--warning)' }
     return null
   }
   const glucoseAlert = mgdl ? getGlucoseAlert(mgdl) : null

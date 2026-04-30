@@ -8,25 +8,25 @@ import {
 } from 'lucide-react'
 
 const FREE_NAV = [
-  { to: '/', label: 'Home', Icon: Home },
-  { to: '/weight', label: 'Weight', Icon: Weight },
-  { to: '/temperature', label: 'Temperature', Icon: Thermometer },
-  { to: '/glucose', label: 'Blood Glucose', Icon: Droplets },
-  { to: '/height', label: 'Height', Icon: Ruler },
+  { to: '/', label: 'Home', labelFr: 'Accueil', Icon: Home },
+  { to: '/weight', label: 'Weight', labelFr: 'Poids', Icon: Weight },
+  { to: '/temperature', label: 'Temperature', labelFr: 'Température', Icon: Thermometer },
+  { to: '/glucose', label: 'Blood Glucose', labelFr: 'Glycémie', Icon: Droplets },
+  { to: '/height', label: 'Height', labelFr: 'Taille', Icon: Ruler },
 ]
 
 const PRO_NAV = [
-  { to: '/bmi', label: 'BMI Calculator', Icon: Calculator },
-  { to: '/dosage', label: 'Drug Dosage', Icon: Syringe },
-  { to: '/ivdrip', label: 'IV Drip Rate', Icon: Activity },
-  { to: '/crcl', label: 'CrCl (Cockcroft)', Icon: FlaskConical },
+  { to: '/bmi', label: 'BMI Calculator', labelFr: 'Calculateur IMC', Icon: Calculator },
+  { to: '/dosage', label: 'Drug Dosage', labelFr: 'Dosage médicament', Icon: Syringe },
+  { to: '/ivdrip', label: 'IV Drip Rate', labelFr: 'Débit IV', Icon: Activity },
+  { to: '/crcl', label: 'CrCl (Cockcroft)', labelFr: 'ClCr (Cockcroft)', Icon: FlaskConical },
 ]
 
 const FOOTER_NAV = [
-  { to: '/reference', label: 'Reference', Icon: BookOpen },
-  { to: '/faq', label: 'FAQ', Icon: HelpCircle },
-  { to: '/privacy', label: 'Privacy', Icon: Shield },
-  { to: '/terms', label: 'Terms', Icon: FileText },
+  { to: '/reference', label: 'Reference', labelFr: 'Référence', Icon: BookOpen },
+  { to: '/faq', label: 'FAQ', labelFr: 'FAQ', Icon: HelpCircle },
+  { to: '/privacy', label: 'Privacy', labelFr: 'Confidentialité', Icon: Shield },
+  { to: '/terms', label: 'Terms', labelFr: 'Conditions', Icon: FileText },
 ]
 
 export default function Layout() {
@@ -138,7 +138,7 @@ export default function Layout() {
 
       {/* Footer nav */}
       <div style={{ padding: '8px 12px', borderTop: '1px solid var(--border)', marginTop: 8 }}>
-        {FOOTER_NAV.map(({ to, label, Icon }) => (
+        {FOOTER_NAV.map(({ to, label, labelFr, Icon }) => (
           <NavLink key={to} to={to} onClick={closeMobile}
             style={({ isActive }) => ({
               display: 'flex', alignItems: 'center', gap: 10,
@@ -147,7 +147,7 @@ export default function Layout() {
               color: isActive ? 'var(--accent)' : 'var(--text3)',
             })}>
             <Icon size={14} />
-            {label}
+            {lang === 'fr' ? labelFr : label}
           </NavLink>
         ))}
       </div>
@@ -172,12 +172,12 @@ export default function Layout() {
             {plan === 'free' && (
               <button className="btn btn-primary" onClick={() => { navigate('/pricing'); closeMobile() }}
                 style={{ width: '100%', marginBottom: 8, fontSize: 12 }}>
-                <Crown size={13} /> Upgrade to Pro
+                <Crown size={13} /> {lang === 'fr' ? 'Passer Pro' : 'Upgrade to Pro'}
               </button>
             )}
             <button className="btn btn-ghost" onClick={logout}
               style={{ width: '100%', fontSize: 12 }}>
-              <LogOut size={13} /> Logout
+              <LogOut size={13} /> {lang === 'fr' ? 'Déconnexion' : 'Logout'}
             </button>
           </>
         ) : (
