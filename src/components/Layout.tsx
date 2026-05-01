@@ -92,7 +92,7 @@ export default function Layout() {
               transition: 'all 0.15s',
             })}>
             <Icon size={16} />
-            {label}
+            {lang === 'fr' ? labelFr : label}
           </NavLink>
         ))}
       </div>
