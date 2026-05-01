@@ -79,8 +79,8 @@ export default function Layout() {
       {/* Free nav */}
       <div style={{ padding: '16px 12px 8px' }}>
         <div style={{ fontSize: 10, color: 'var(--text3)', fontWeight: 700,
-          letterSpacing: 1, marginBottom: 8, paddingLeft: 8 }}>FREE</div>
-        {FREE_NAV.map(({ to, label, Icon }) => (
+          letterSpacing: 1, marginBottom: 8, paddingLeft: 8 }}>{lang === 'fr' ? 'GRATUIT' : 'FREE'}</div>
+        {FREE_NAV.map(({ to, label, labelFr, Icon }) => (
           <NavLink key={to} to={to} end={to === '/'}
             onClick={closeMobile}
             style={({ isActive }) => ({
@@ -104,7 +104,7 @@ export default function Layout() {
           letterSpacing: 1, marginBottom: 8, paddingLeft: 8 }}>
           <Crown size={10} /> PRO
         </div>
-        {PRO_NAV.map(({ to, label, Icon }) => (
+        {PRO_NAV.map(({ to, label, labelFr, Icon }) => (
           plan === 'pro' ? (
             <NavLink key={to} to={to} onClick={closeMobile}
               style={({ isActive }) => ({
@@ -115,7 +115,7 @@ export default function Layout() {
                 color: isActive ? 'var(--pro)' : 'var(--text2)',
               })}>
               <Icon size={16} />
-              {label}
+              {lang === 'fr' ? labelFr : label}
             </NavLink>
           ) : (
             <div key={to} onClick={() => { navigate('/pricing'); closeMobile() }}
@@ -127,7 +127,7 @@ export default function Layout() {
               }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <Icon size={16} />
-                {label}
+                {lang === 'fr' ? labelFr : label}
               </div>
               <span style={{ fontSize: 9, background: 'var(--pro)', color: '#000',
                 padding: '2px 5px', borderRadius: 4, fontWeight: 800 }}>PRO</span>
