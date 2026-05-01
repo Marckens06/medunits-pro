@@ -11,29 +11,53 @@ export default function BloodGlucose() {
   const valid = !isNaN(num) && num > 0
 
   const getStatus = (mgdl: number) => {
-    if (mgdl < 70) return { label: 'Hypoglycemia', color: 'var(--red)' }
-    if (mgdl <= 99) return { label: 'Normal (Fasting)', color: 'var(--success)' }
-    if (mgdl <= 125) return { label: 'Pre-diabetes', color: 'var(--warning)' }
-    return { label: 'Diabetes range', color: 'var(--red)' }
+    if (mgdl < 70) return { label: isFr ? 'Hypoglycemie' : 'Hypoglycemia', color: 'var(--red)' }
+    if (mgdl <= 99) return { label: isFr ? 'Normal (a jeun)' : 'Normal (Fasting)', color: 'var(--success)' }
+    if (mgdl <= 125) return { label: isFr ? 'Pre-diabete' : 'Pre-diabetes', color: 'var(--warning)' }
+    return { label: isFr ? 'Zone diabete' : 'Diabetes range', color: 'var(--red)' }
+  }
+
+  const getAlert = (mgdl: number) => {
+    if (mgdl < 54) return {
+      msg: isFr
+        ? '🚨 Hypoglycemie Niveau 2 (<54 mg/dL) — Cliniquement significatif. Traitement immediat requis.'
+        : '🚨 Level 2 Hypoglycemia (<54 mg/dL) — Clinically significant. Immediate treatment required.',
+      color: 'var(--red)'
+    }
+    if (mgdl < 70) return {
+      msg: isFr
+        ? '⚠️ Hypoglycemie Niveau 1 (<70 mg/dL) — Seuil alerte. Le patient doit se traiter immediatement.'
+        : '⚠️ Level 1 Hypoglycemia (<70 mg/dL) — Alert threshold. Patient should treat immediately.',
+      color: 'var(--warning)'
+    }
+    if (mgdl >= 400) return {
+      msg: isFr
+        ? '🚨 Hyperglycemie severe (>=400 mg/dL) — Risque ACD/SHH. Evaluation medicale urgente necessaire.'
+        : '🚨 Severe Hyperglycemia (>=400 mg/dL) — Risk of DKA/HHS. Urgent medical evaluation needed.',
+      color: 'var(--red)'
+    }
+    if (mgdl >= 180) return {
+      msg: isFr
+        ? '⚠️ Hyperglycemie (>=180 mg/dL) — Au-dessus de la cible postprandiale pour la plupart des diabetiques.'
+        : '⚠️ Hyperglycemia (>=180 mg/dL) — Above postprandial target for most diabetic patients.',
+      color: 'var(--warning)'
+    }
+    return null
   }
 
   const mgdl = valid ? (from === 'mgdl' ? num : mmolToMgdl(num)) : null
   const mmol = valid ? (from === 'mmol' ? num : mgdlToMmol(num)) : null
   const status = mgdl ? getStatus(mgdl) : null
-
-  const getGlucoseAlert = (v: number) => {
-    if (v < 54) return { msg: isFr ? '🚨 Hypoglycémie Niveau 2 (<54 mg/dL) — Cliniquement significatif. Traitement immédiat requis.' : '🚨 Level 2 Hypoglycemia (<54 mg/dL) — Clinically significant. Immediate treatment required.', color: 'var(--red)' }
-    if (v < 70) return { msg: isFr ? '⚠️ Hypoglycémie Niveau 1 (<70 mg/dL) — Seuil d'alerte. Le patient doit se traiter immédiatement.' : '⚠️ Level 1 Hypoglycemia (<70 mg/dL) — Alert threshold. Patient should treat immediately.', color: 'var(--warning)' }
-    if (v >= 400) return { msg: isFr ? '🚨 Hyperglycémie sévère (≥400 mg/dL) — Risque d'ACD/SHH. Évaluation médicale urgente nécessaire.' : '🚨 Severe Hyperglycemia (≥400 mg/dL) — Risk of DKA/HHS. Urgent medical evaluation needed.', color: 'var(--red)' }
-    if (v >= 180) return { msg: isFr ? '⚠️ Hyperglycémie (≥180 mg/dL) — Au-dessus de la cible postprandiale pour la plupart des patients diabétiques.' : '⚠️ Hyperglycemia (≥180 mg/dL) — Above postprandial target for most diabetic patients.', color: 'var(--warning)' }
-    return null
-  }
-  const glucoseAlert = mgdl ? getGlucoseAlert(mgdl) : null
+  const alert = mgdl ? getAlert(mgdl) : null
 
   return (
     <div style={{ maxWidth: 600, margin: '0 auto' }}>
-      <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8 }}>🩸 Blood Glucose Converter</h1>
-      <p style={{ color: 'var(--text2)', marginBottom: 32 }}>Convert between mg/dL and mmol/L</p>
+      <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8 }}>
+        🩸 {isFr ? 'Convertisseur Glycemie' : 'Blood Glucose Converter'}
+      </h1>
+      <p style={{ color: 'var(--text2)', marginBottom: 32 }}>
+        {isFr ? 'Convertir entre mg/dL et mmol/L' : 'Convert between mg/dL and mmol/L'}
+      </p>
       <div className="card" style={{ marginBottom: 16 }}>
         <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
           {[['mgdl', 'mg/dL'], ['mmol', 'mmol/L']].map(([val, label]) => (
@@ -45,7 +69,7 @@ export default function BloodGlucose() {
           ))}
         </div>
         <input className="input" type="number" step="0.1"
-          placeholder={`Enter value in ${from === 'mgdl' ? 'mg/dL' : 'mmol/L'}`}
+          placeholder={`${isFr ? 'Entrez une valeur en' : 'Enter value in'} ${from === 'mgdl' ? 'mg/dL' : 'mmol/L'}`}
           value={value} onChange={e => setValue(e.target.value)} autoFocus />
       </div>
       {valid && mgdl && mmol && (
@@ -64,29 +88,36 @@ export default function BloodGlucose() {
               </div>
             )}
           </div>
+          {alert && (
+            <div className="card" style={{ marginBottom: 12, background: 'rgba(239,68,68,0.08)',
+              border: `1px solid ${alert.color}` }}>
+              <div style={{ fontSize: 13, color: alert.color, fontWeight: 600 }}>{alert.msg}</div>
+            </div>
+          )}
           {status && (
-            <div className="card" style={{ background: 'rgba(37,99,235,0.08)', display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{ width: 12, height: 12, borderRadius: '50%', background: status.color, flexShrink: 0 }} />
+            <div className="card" style={{ background: 'rgba(37,99,235,0.08)',
+              display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 12, height: 12, borderRadius: '50%',
+                background: status.color, flexShrink: 0 }} />
               <div>
                 <div style={{ fontWeight: 700, color: status.color }}>{status.label}</div>
-                <div style={{ fontSize: 12, color: 'var(--text3)' }}>Based on fasting glucose reference ranges</div>
+                <div style={{ fontSize: 12, color: 'var(--text3)' }}>
+                  {isFr ? 'Basé sur les valeurs de référence glycémique à jeun' : 'Based on fasting glucose reference ranges'}
+                </div>
               </div>
             </div>
           )}
         </>
       )}
-      {glucoseAlert && valid && (
-        <div className="card" style={{ marginBottom: 12, background: 'rgba(239,68,68,0.08)', border: `1px solid ${glucoseAlert.color}` }}>
-          <div style={{ fontSize: 13, color: glucoseAlert.color, fontWeight: 600 }}>{glucoseAlert.msg}</div>
-        </div>
-      )}
       <div className="card" style={{ marginTop: 16, background: 'rgba(37,99,235,0.08)' }}>
-        <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text2)', marginBottom: 8 }}>📋 Reference Ranges</div>
+        <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text2)', marginBottom: 8 }}>
+          📋 {isFr ? 'Valeurs de référence' : 'Reference Ranges'}
+        </div>
         <div style={{ fontSize: 12, color: 'var(--text3)', display: 'flex', flexDirection: 'column', gap: 4 }}>
-          <span>Normal fasting: 70–99 mg/dL (3.9–5.5 mmol/L)</span>
-          <span>Pre-diabetes: 100–125 mg/dL (5.6–6.9 mmol/L)</span>
-          <span>Diabetes: ≥126 mg/dL (≥7.0 mmol/L)</span>
-          <span>Hypoglycemia: &lt;70 mg/dL (&lt;3.9 mmol/L)</span>
+          <span>{isFr ? 'Normal à jeun' : 'Normal fasting'}: 70–99 mg/dL (3.9–5.5 mmol/L)</span>
+          <span>{isFr ? 'Pre-diabète' : 'Pre-diabetes'}: 100–125 mg/dL (5.6–6.9 mmol/L)</span>
+          <span>{isFr ? 'Diabète' : 'Diabetes'}: ≥126 mg/dL (≥7.0 mmol/L)</span>
+          <span>{isFr ? 'Hypoglycémie' : 'Hypoglycemia'}: &lt;70 mg/dL (&lt;3.9 mmol/L)</span>
         </div>
       </div>
     </div>
